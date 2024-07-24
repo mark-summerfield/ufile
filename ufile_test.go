@@ -227,29 +227,3 @@ func Test_read_write_text(t *testing.T) {
 		log.Fatalf("%q ReadUtf8Lines !=\n%q\n", Lines, lines)
 	}
 }
-
-func TestRelativized(t *testing.T) {
-	filename := "util.go"
-	rel, ok := Relativized(".", filename)
-	if !ok {
-		t.Errorf("Relativized expected ok = true for %q; got false and %q",
-			filename, rel)
-	} else if rel != filename {
-		t.Errorf("Relativized expected %q; got %q", filename, rel)
-	}
-
-	filename = "bin/ufile.go"
-	rel, ok = Relativized("/home/mark/app/go/ufile", filename)
-	if !ok {
-		t.Errorf("Relativized expected ok = true for %q; got false and %q",
-			filename, rel)
-	} else if rel != filename {
-		t.Errorf("Relativized expected %q; got %q", filename, rel)
-	}
-
-	filename = "../clip/doc.go"
-	_, ok = Relativized("/home/mark/app/go/ufile", filename)
-	if ok {
-		t.Error("Relativized expected ok = false; got true")
-	}
-}

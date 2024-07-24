@@ -224,20 +224,6 @@ func ReadUtf8Lines(filename string) iter.Seq2[string, error] {
 	}
 }
 
-// Relativized returns filename with a path relative to dir, (i.e., as if
-// dir were root but without the leading /) and true; or filename with an
-// absolute path and false if filename isn't in the same path tree as dir.
-// See also [AbsPath].
-func Relativized(dir, filename string) (string, bool) {
-	dir = AbsPath(dir)
-	filename = AbsPath(filename)
-	common := LongestCommonPath([]string{dir, filename})
-	if common == "" || common != dir {
-		return filename, false
-	}
-	return filename[len(common)+1:], true
-}
-
 // WriteTextFile writes the given lines to the given filename adding the
 // platform-appropriate EOL to each line written.
 func WriteTextFile(filename string, lines []string) error {
