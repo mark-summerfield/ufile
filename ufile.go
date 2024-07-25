@@ -1,5 +1,6 @@
 // Copyright © 2024 Mark Summerfield. All rights reserved.
 
+// This package provides file-related utility functions.
 package ufile
 
 import (
