@@ -20,7 +20,7 @@ import (
 //go:embed Version.dat
 var Version string
 
-const ModeUserRW = 0o600
+const ModeURW = 0o600
 
 // AbsPath returns the filename with its path absolute, or cleaned on error.
 // See also [Relativized].
