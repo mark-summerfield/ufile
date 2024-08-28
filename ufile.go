@@ -32,6 +32,7 @@ func AbsPath(filename string) string {
 	return filepath.Clean(filename)
 }
 
+// Barename returns the filename without any path and without any suffix.
 func Barename(path string) string {
 	if i := strings.LastIndexAny(path, `/\`); i > -1 {
 		path = path[i+1:]
