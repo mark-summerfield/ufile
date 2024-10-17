@@ -145,6 +145,24 @@ func GetIniFile(domain, appname string) (string, bool) {
 	return GetConfigFile(domain, appname, ".ini")
 }
 
+// HomeDir returns the abs path of the home folder, e.g., `/home/mark`.
+func HomeDir() string {
+	name, err := os.UserHomeDir()
+	if err != nil {
+		return AbsPath(".")
+	}
+	return name
+}
+
+// IsDir returns true if name is a folder; otherwise returns false.
+func IsDir(name string) bool {
+	info, err := os.Stat(name)
+	if err != nil {
+		return false
+	}
+	return info.IsDir()
+}
+
 // LongestCommonPath returns the longest common path, i.e., component,
 // / or \ separated (which could be "" if there isn't one), and lowercased
 // on Windows.
