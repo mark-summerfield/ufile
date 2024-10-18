@@ -1,6 +1,8 @@
 // Copyright © 2024 Mark Summerfield. All rights reserved.
 
-// This package provides file-related utility functions.
+// This package provides file-related utility functions. ([TOC])
+//
+// [TOC]: file:///home/mark/app/golib/doc/index.html
 package ufile
 
 import (
