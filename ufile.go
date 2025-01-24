@@ -1,6 +1,6 @@
 // Copyright © 2024 Mark Summerfield. All rights reserved.
 
-// This package provides file-related utility functions. ([TOC])
+// ([TOC]) This package provides file-related utility functions.
 //
 // [TOC]: file:///home/mark/app/golib/doc/index.html
 package ufile
@@ -13,6 +13,7 @@ import (
 	"iter"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -75,7 +76,8 @@ func GetConfigFile(domain, appname, ext string) (string, bool) {
 	if !strings.HasPrefix(ext, ".") {
 		ext = "." + ext
 	}
-	filename := appname + ext
+	rx := regexp.MustCompile(`\W+`)
+	filename := rx.ReplaceAllString(appname, "_") + ext
 	filenames := make([]string, 0, 8)
 	var preferred string
 	var fallback string
