@@ -8,6 +8,7 @@ package ufile
 import (
 	"bufio"
 	"bytes"
+	"compress/gzip"
 	_ "embed"
 	"io"
 	"iter"
@@ -209,11 +210,24 @@ func PathExists(path string) bool {
 }
 
 // ReadTextFile reads the given file and returns a slices of lines with
-// EOL stripped off. See also [ReadUtf8Lines]
+// EOL stripped off. Will automatically uncompress .gz files.
+// See also [ReadUtf8Lines]
 func ReadTextFile(filename string) ([]string, error) {
 	raw, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
+	}
+	if strings.HasSuffix(filename, ".gz") && len(raw) > 2 &&
+		raw[0] == 0x1F && raw[1] == 0x8B {
+		reader := bytes.NewReader(raw)
+		if gzreader, err := gzip.NewReader(reader); err != nil {
+			return nil, err
+		} else {
+			raw, err = io.ReadAll(gzreader)
+			if err != nil {
+				return nil, err
+			}
+		}
 	}
 	raw = bytes.ReplaceAll(raw, []byte{'\r'}, []byte{})
 	raw = bytes.TrimRight(raw, "\n")
